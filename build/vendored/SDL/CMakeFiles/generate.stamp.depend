@@ -1,0 +1,54 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.3/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakeParseArguments.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CMakePushCheckState.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCSourceRuns.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckIncludeFiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckLanguage.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckStructHasMember.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/FindGit.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/FindPkgConfig.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CheckCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CheckFlagCommonConfig.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/Internal/CheckSourceRuns.cmake
+C:/Program Files/CMake/share/cmake-4.3/Modules/WriteBasicConfigVersionFile.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/build/CMakeFiles/cmake.verify_globs
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/SDL_build_config.h.intermediate
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/git-data/grabRef.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/.git/HEAD
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/.git/refs/heads/main
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/CMakeLists.txt
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/3rdparty.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/FindLibUSB.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/GetGitRevisionDescription.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/GetGitRevisionDescription.cmake.in
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/PreseedEmscriptenCache.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/PreseedMSVCCache.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/PreseedNokiaNGageCache.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/SDL3Config.cmake.in
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/macros.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlchecks.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlcommands.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlcompilers.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlcpu.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlmanpages.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/cmake/sdlplatform.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/include/build_config/SDL_build_config.h.cmake
+C:/Users/goncalo/Documents/GitHub/miniclip/vendored/SDL/include/build_config/SDL_revision.h.cmake

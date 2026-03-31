@@ -1,0 +1,9 @@
+C:/Users/goncalo/Documents/GitHub/miniclip/build/CMakeFiles/miniclip_bubble.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/CMakeFiles/run.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/CMakeFiles/edit_cache.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/CMakeFiles/rebuild_cache.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/SDL3-shared.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/SDL3_test.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/SDL_uclibc.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/edit_cache.dir
+C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/CMakeFiles/rebuild_cache.dir

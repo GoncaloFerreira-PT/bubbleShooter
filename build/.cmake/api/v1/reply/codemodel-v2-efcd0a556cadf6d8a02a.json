@@ -1,0 +1,174 @@
+{
+	"configurations" : 
+	[
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "Git::Git::@8fb704815aaca498baa2",
+					"jsonFile" : "target-Git__Git-Debug-e8d3bd8c50997fbade7f.json",
+					"name" : "Git::Git",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL3-collector::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL3-collector-Debug-a38d6cf224d8aa5d531c.json",
+					"name" : "SDL3-collector",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL3_Headers::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL3_Headers-Debug-f24aa86dd39c14e16b47.json",
+					"name" : "SDL3_Headers",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL3_test-collector::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL3_test-collector-Debug-541b7c7c9f058e2d5a9c.json",
+					"name" : "SDL3_test-collector",
+					"projectIndex" : 1
+				}
+			],
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f040eec181a89de70dbe.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"build" : "vendored/SDL",
+					"jsonFile" : "directory-vendored.SDL-Debug-c5d714b6c1114e8ca09c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "vendored/SDL",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "miniclip_bubble",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "SDL3",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL3-shared::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL3-shared-Debug-a3ec94daf764a8cf1a82.json",
+					"name" : "SDL3-shared",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL3_test::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL3_test-Debug-4538f1d747423e232376.json",
+					"name" : "SDL3_test",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "SDL_uclibc::@8fb704815aaca498baa2",
+					"jsonFile" : "target-SDL_uclibc-Debug-6a71da3c1ffbcc6d4daa.json",
+					"name" : "SDL_uclibc",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "miniclip_bubble::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-miniclip_bubble-Debug-c2a313182b3ae7e5faef.json",
+					"name" : "miniclip_bubble",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "run::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-run-Debug-102132c06726a0e36f39.json",
+					"name" : "run",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/goncalo/Documents/GitHub/miniclip/build",
+		"source" : "C:/Users/goncalo/Documents/GitHub/miniclip"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	}
+}
