@@ -1,0 +1,34 @@
+{
+  "atlases": [
+    {
+      "name": "atlas",
+      "path": "resources/atlas.png",
+      "format": "RGBA8888",
+      "size": {
+        "w": 160,
+        "h": 32
+      },
+      "scale": 1,
+      "regions": [
+        { "name": "img_inventory", "x": 0, "y": 0, "w": 113, "h": 32 },
+        { "name": "img_cannon", "x": 112, "y": 0, "w": 32, "h": 32 },
+        { "name": "img_bubble", "x": 144, "y": 0, "w": 16, "h": 16 }
+      ]
+    }
+  ],
+  "textures": [],
+  "fonts": [
+    {
+      "path": "resources/OpenSans-Regular.ttf",
+      "size": 18
+    },
+    {
+      "path": "resources/OpenSans-Regular.ttf",
+      "size": 24
+    }
+  ],
+  "sounds": [{
+    "name": "snd_bubble",
+    "path": "resources/snd_bubble.wav"
+  }]
+}

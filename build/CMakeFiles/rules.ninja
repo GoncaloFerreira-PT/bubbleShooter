@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: miniclip_bubble
+# Project: bubbleShooter
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -18,20 +18,49 @@ msvc_deps_prefix = Observaá∆o: incluindo arquivo:
 
 
 #############################################
-# Rule for compiling C files.
+# Rule for generating CXX dependencies.
 
-rule C_COMPILER__miniclip_bubble_unscanned_Debug
+rule CXX_SCAN__bubbleShooter_Debug
   deps = msvc
-  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
-  description = Building C object $out
+  command = C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe $DEFINES $INCLUDES $FLAGS $in -nologo -TP -showIncludes -scanDependencies $DYNDEP_INTERMEDIATE_FILE -Fo$OBJ_FILE
+  description = Scanning $in for CXX dependencies
 
 
 #############################################
-# Rule for linking C executable.
+# Rule to generate ninja dyndep files for CXX.
 
-rule C_EXECUTABLE_LINKER__miniclip_bubble_Debug
+rule CXX_DYNDEP__bubbleShooter_Debug
+  command = "C:\Program Files\CMake\bin\cmake.exe" -E cmake_ninja_dyndep --tdi=CMakeFiles\bubbleShooter.dir\CXXDependInfo.json --lang=CXX --modmapfmt=msvc --dd=$out @$out.rsp
+  description = Generating CXX dyndep file $out
+  rspfile = $out.rsp
+  rspfile_content = $in
+  restat = 1
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__bubbleShooter_scanned_Debug
+  deps = msvc
+  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo /TP $DEFINES $INCLUDES $FLAGS /showIncludes @$DYNDEP_MODULE_MAP_FILE /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__bubbleShooter_unscanned_Debug
+  deps = msvc
+  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo /TP $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__bubbleShooter_Debug
   command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Program Files\CMake\bin\cmake.exe" -E vs_link_exe --msvc-ver=1950 --intdir=$OBJECT_DIR --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100261~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100261~1.0\x86\mt.exe --manifests $MANIFESTS -- C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\link.exe /nologo $in  /out:$TARGET_FILE /implib:$TARGET_IMPLIB /pdb:$TARGET_PDB /version:0.0 $LINK_FLAGS $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
+  description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 
 
@@ -44,95 +73,11 @@ rule CUSTOM_COMMAND
 
 
 #############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__SDL3-shared_unscanned_Debug
-  deps = msvc
-  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for compiling CXX files.
-
-rule CXX_COMPILER__SDL3-shared_unscanned_Debug
-  deps = msvc
-  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo /TP $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
-  description = Building CXX object $out
-
-
-#############################################
-# Rule for compiling RC files.
-
-rule RC_COMPILER__SDL3-shared_unscanned_Debug
-  depfile = $DEP_FILE
-  deps = gcc
-  command = C:/PROGRA~1/CMake/bin/cmcldeps.exe RC $in $DEP_FILE $out "Observa√ß√£o: incluindo arquivo: " "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/bin/Hostx86/x86/cl.exe" ${LAUNCHER}${CODE_CHECK}C:\PROGRA~2\WI3CF2~1\10\bin\100261~1.0\x86\rc.exe $DEFINES $INCLUDES $FLAGS /fo $out $in
-  description = Building RC object $out
-
-
-#############################################
-# Rule for linking CXX shared library.
-
-rule CXX_SHARED_LIBRARY_LINKER__SDL3-shared_Debug
-  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Program Files\CMake\bin\cmake.exe" -E vs_link_dll --msvc-ver=1950 --intdir=$OBJECT_DIR --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100261~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100261~1.0\x86\mt.exe --manifests $MANIFESTS -- C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\link.exe /nologo @$RSP_FILE  /out:$TARGET_FILE /implib:$TARGET_IMPLIB /pdb:$TARGET_PDB /dll /version:0.0 $LINK_FLAGS && $POST_BUILD"
-  description = Linking CXX shared library $TARGET_FILE
-  rspfile = $RSP_FILE
-  rspfile_content = $in_newline $LINK_PATH $LINK_LIBRARIES
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__SDL3_test_unscanned_Debug
-  deps = msvc
-  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER__SDL3_test_Debug
-  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\lib.exe /nologo $LINK_FLAGS /out:$TARGET_FILE $in && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__SDL_uclibc_unscanned_Debug
-  deps = msvc
-  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\cl.exe  /nologo $DEFINES $INCLUDES $FLAGS /showIncludes /Fo$out /Fd$TARGET_COMPILE_PDB /FS -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER__SDL_uclibc_Debug
-  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\PROGRA~1\MICROS~4\18\COMMUN~1\VC\Tools\MSVC\1450~1.357\bin\Hostx86\x86\lib.exe /nologo $LINK_FLAGS /out:$TARGET_FILE $in && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\goncalo\Documents\GitHub\miniclip -BC:\Users\goncalo\Documents\GitHub\miniclip\build
+  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\goncalo\Documents\GitHub\bubbleShooter -BC:\Users\goncalo\Documents\GitHub\bubbleShooter\build
   description = Re-running CMake...
-  generator = 1
-
-
-#############################################
-# Rule for re-checking globbed directories.
-
-rule VERIFY_GLOBS
-  command = "C:\Program Files\CMake\bin\cmake.exe" -P C:\Users\goncalo\Documents\GitHub\miniclip\build\CMakeFiles\VerifyGlobs.cmake
-  description = Re-checking globbed directories...
   generator = 1
 
 

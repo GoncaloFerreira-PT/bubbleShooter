@@ -1,8 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"C:/Users/goncalo/Documents/GitHub/miniclip/build/cmake_install.cmake",
-		"C:/Users/goncalo/Documents/GitHub/miniclip/build/vendored/SDL/cmake_install.cmake"
+		"C:/Users/goncalo/Documents/GitHub/bubbleShooter/build/cmake_install.cmake"
 	],
 	"Parallel" : false
 }
