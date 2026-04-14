@@ -38,13 +38,14 @@ class Ball : public MovableNode {
 
 public:
   enum Animation {
+    NONE,
     Pop,
     Fall,
   };
 
 private:
   vec2i gridPosition = {0, 0};
-  Animation animation = Animation::Pop;
+  Animation animation = Animation::NONE;
 
 public:
   Color color;
