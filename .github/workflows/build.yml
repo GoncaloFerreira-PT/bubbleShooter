@@ -48,3 +48,4 @@ jobs:
         path: |
           build/bubbleShooter
           build/resources/
+          build/**/*.dylib
