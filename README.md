@@ -6,6 +6,9 @@ This project was built from scratch to demonstrate advanced C++ concepts, custom
 
 !(![Bubble Shooter Gameplay](https://github.com/GoncaloFerreira-PT/bubbleShooter/blob/master/video.gif?raw=true))
 
+    Note: If running the Mac build there might be issues regarding quarenten of the files, possible solution:
+    xattr -cr {PATH_TO_FOLDER}
+
 ---
 
 ## 🛠️ Building the Project
