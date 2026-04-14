@@ -43,8 +43,8 @@ public:
   };
 
 private:
-  vec2i gridPosition;
-  Animation animation;
+  vec2i gridPosition = {0, 0};
+  Animation animation = Animation::Pop;
 
 public:
   Color color;

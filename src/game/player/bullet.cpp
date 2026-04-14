@@ -6,6 +6,7 @@
 #include "game/bubbleGameConfig.h"
 
 Bullet::Bullet(SDL_FRect rect, Color color) : MovableNode(rect) {
+  this->active = false;
   this->speed = Game::Config::Rules::BULLET_SPEED;
   this->color = color;
   this->SetModulate(GetModulateFromEnum(color));
