@@ -19,9 +19,6 @@ private:
   int scrolls = 0;
   bool isShowcase = false;
 
-  // Pattern
-  // InitialLines = 10
-
 public:
   BallContainer(SDL_FRect rect, bool showcase);
   Ball *AddBallAt(Color color, vec2i position);

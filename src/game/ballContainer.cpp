@@ -7,6 +7,7 @@
 #include "core/utils/console.h"
 #include "game/bubbleGameConfig.h"
 #include "game/bullet.h"
+#include <cfloat>
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
