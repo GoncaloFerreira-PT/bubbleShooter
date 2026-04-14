@@ -36,10 +36,10 @@ target_link_libraries(bubbleShooter PRIVATE
 if(WIN32)
   add_custom_command(TARGET bubbleShooter POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3/lib/x86/SDL3.dll"
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_image/lib/x86/SDL3_image.dll"
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_ttf/lib/x86/SDL3_ttf.dll"
-    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_mixer/lib/x86/SDL3_mixer.dll"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3/lib/x64/SDL3.dll"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_image/lib/x64/SDL3_image.dll"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_ttf/lib/x64/SDL3_ttf.dll"
+    "${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL3_mixer/lib/x64/SDL3_mixer.dll"
     "$<TARGET_FILE_DIR:bubbleShooter>"
   )
 endif()

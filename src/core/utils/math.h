@@ -1,31 +1,25 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <algorithm> // for std::clamp
 #include <cmath>
-#include <cstddef>
 #include <functional>
 
 namespace Math {
-  const float PI = 3.14159265f;
+  constexpr float PI = 3.14159265f;
 
   inline float RadToDeg(float rad) { return rad * (180.0f / PI); }
 
   inline float DegToRad(float deg) { return deg * (PI / 180.0f); }
 
-  inline float Lerp(const float a, const float b, float t) {
-    if (t < 0.0f) t = 0.0f;
-    if (t > 1.0f) t = 1.0f;
-    return a + (b - a) * t;
-  }
+  inline float Lerp(float a, float b, float t) { return a + (b - a) * std::clamp(t, 0.0f, 1.0f); }
 
   inline float InverseLerp(float a, float b, float value) {
-    if (a == b) return 0.0f;
-    float t = (value - a) / (b - a);
-    return (t < 0.0f) ? 0.0f : (t > 1.0f ? 1.0f : t);
+    if (std::abs(a - b) < 1e-6f) return 0.0f;
+    return std::clamp((value - a) / (b - a), 0.0f, 1.0f);
   }
 
   inline float MapRange(float inMin, float inMax, float outMin, float outMax, float value) {
-    float t = InverseLerp(inMin, inMax, value);
-    return Lerp(outMin, outMax, t);
+    return Lerp(outMin, outMax, InverseLerp(inMin, inMax, value));
   }
 
   struct vec2 {
@@ -37,15 +31,9 @@ namespace Math {
 
     vec2 operator-(const vec2 &o) const { return {x - o.x, y - o.y}; }
 
-    vec2 operator-(float o) const { return {x - o, y - o}; }
+    vec2 operator-(const float &o) const { return {x - o, y - o}; }
 
     vec2 operator*(float scalar) const { return {x * scalar, y * scalar}; }
-
-    vec2 &operator-=(float o) {
-      x -= o;
-      y -= o;
-      return *this;
-    }
 
     float length_sq() const { return x * x + y * y; }
 
@@ -53,10 +41,10 @@ namespace Math {
 
     vec2 normalized() const {
       float l = length();
-      return (l > 0) ? vec2{x / l, y / l} : vec2{0, 0};
+      return (l > 0.0f) ? vec2{x / l, y / l} : vec2{0.0f, 0.0f};
     }
 
-    float distance_sq(const vec2 &o) const { return (*this - o).length_sq(); }
+    float distance_sq(const vec2 &o) const { return (x - o.x) * (x - o.x) + (y - o.y) * (y - o.y); }
   };
 
   struct vec2i {
@@ -68,19 +56,17 @@ namespace Math {
 
     vec2i operator-(const vec2i &o) const { return {x - o.x, y - o.y}; }
 
-    vec2i operator/(int scalar) const { return {x / scalar, y / scalar}; }
-
     vec2i operator*(int scalar) const { return {x * scalar, y * scalar}; }
-
-    int length_sq() const { return x * x + y * y; }
   };
 } // namespace Math
 
 namespace std {
   template <typename T> struct VecHash {
     size_t operator()(const T &v) const {
-      hash<decltype(v.x)> h;
-      return h(v.x) ^ (h(v.y) << 1);
+      // A better combine hash to prevent collisions
+      size_t h1 = hash<decltype(v.x)>{}(v.x);
+      size_t h2 = hash<decltype(v.y)>{}(v.y);
+      return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
     }
   };
 

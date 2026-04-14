@@ -1,8 +1,10 @@
 #include "comboContainer.h"
+#include "core/managers/audioManager.h"
 #include "core/managers/eventManager.h"
 #include "core/managers/gameStateManager.h"
 #include "core/utils/math.h"
 #include "game/bubbleGameConfig.h"
+#include <SDL3/SDL_rect.h>
 
 ComboContainer::ComboContainer() {
   total = 0;
@@ -35,11 +37,13 @@ void ComboContainer::SetValueCallback(std::any data) {
   currentValue = Game::Config::Rules::BASE_POINTS * (count * count);
   label->SetText(std::to_string(currentValue));
   label->UpdateSizeOnly();
-  float screenCenterX = 640.0f / 2.0f;
-  float screenCenterY = 480.0f / 2.0f;
+  SDL_FRect screenSize = GameScene::Instance().GetRect();
+  float screenCenterX = screenSize.w / 2;
+  float screenCenterY = screenSize.h / 2;
   label->SetPosition({screenCenterX - (label->rect.w / 2.0f), screenCenterY - (label->rect.h / 2.0f)});
   float targetScale = Math::MapRange(3.0f, 12.0f, 1.0f, 1.2f, (float)count);
   StartAnimation(targetScale);
+  AudioManager::Instance().PlaySound("snd_points");
 }
 
 void ComboContainer::StartAnimation(float targetScale) {

@@ -1,15 +1,9 @@
 #pragma once
-#include "audioManager.h"
-#include "fontManager.h"
-#include "textureManager.h"
 #include <SDL3/SDL.h>
-#include <fstream>
 #include <json.hpp>
 #include <string>
 
-
 class ResourceManager {
-
 
 public:
   struct ResourceAtlasData {};

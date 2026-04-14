@@ -1,6 +1,6 @@
 #pragma once
 #include "core/node/node.h"
-#include "game/ball.h"
+#include "game/board/ball.h"
 #include "game/bubbleGameConfig.h"
 #include <SDL3/SDL.h>
 #include <any>

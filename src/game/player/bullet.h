@@ -1,6 +1,6 @@
 #pragma once
 #include "core/node/node.h"
-#include "game/ball.h"
+#include "game/board/ball.h"
 
 class Bullet : public MovableNode {
 public:

@@ -1,6 +1,5 @@
 #include "core/node/label.h"
 #include "core/managers/fontManager.h"
-#include "core/utils/console.h"
 
 void Label::SetText(const std::string &newText) {
   if (text != newText) {
@@ -24,26 +23,17 @@ void Label::RegenerateTexture(SDL_Renderer *renderer) {
     texture = nullptr;
   }
 
-  if (font == nullptr || text.empty()) {
+  if (!font || text.empty()) {
     dirty = false;
     return;
   }
 
   SDL_Surface *surface = TTF_RenderText_Blended(font.get(), text.c_str(), text.length(), {255, 255, 255, 255});
-  if (!surface) {
-    Console::Error("TTF_RenderText_Blended() Error: " + std::string(SDL_GetError()));
-    return;
-  }
+  if (!surface) return;
 
   texture = SDL_CreateTextureFromSurface(renderer, surface);
-  if (!texture) {
-    Console::Error("SDL_CreateTextureFromSurface() Error: " + std::string(SDL_GetError()));
-    SDL_DestroySurface(surface);
-    return;
-  }
-
-  rect.w = (float)surface->w;
-  rect.h = (float)surface->h;
+  rect.w = static_cast<float>(surface->w);
+  rect.h = static_cast<float>(surface->h);
 
   SDL_DestroySurface(surface);
   dirty = false;
@@ -60,13 +50,12 @@ void Label::UpdateSizeOnly() {
 }
 
 void Label::Draw(SDL_Renderer *renderer) {
-  if (dirty) { RegenerateTexture(renderer); }
+  if (dirty) RegenerateTexture(renderer);
+  if (!texture) return;
 
-  if (texture) {
-    SDL_Color modulate = GetModulate();
-    SDL_SetTextureColorMod(texture, modulate.r, modulate.g, modulate.b);
-    SDL_SetTextureAlphaMod(texture, modulate.a);
-    SDL_FRect scaledRect = GetScaledRect();
-    SDL_RenderTexture(renderer, texture, NULL, &scaledRect);
-  }
+  SDL_SetTextureColorMod(texture, modulate.r, modulate.g, modulate.b);
+  SDL_SetTextureAlphaMod(texture, modulate.a);
+
+  SDL_FRect drawRect = GetScaledRect();
+  SDL_RenderTexture(renderer, texture, nullptr, &drawRect);
 }

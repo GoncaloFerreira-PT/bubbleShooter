@@ -9,143 +9,154 @@
 #include "core/node/toggleButton.h"
 #include "core/utils/console.h"
 #include "core/utils/debug.h"
-#include "difficultyController.h"
-#include "game/ballContainer.h"
-#include "game/board.h"
-#include "game/cannon.h"
-#include "game/comboContainer.h"
-#include "game/inventory.h"
+#include "game/board/board.h"
+#include "game/controllers/ballController.h"
+#include "game/controllers/difficultyController.h"
+#include "game/player/cannon.h"
+#include "game/player/comboContainer.h"
+#include "game/player/inventory.h"
 #include <any>
 #include <memory>
 #include <string>
 
+// --- Initialization & Input ---
+
 void BubbleGame::Initialize(SDL_Renderer *renderer) {
   SetRenderer(renderer);
   ResourceManager::Instance().Load();
+
+  // Start in Menu state and trigger background music
   GameStateManager::Instance().ChangeState(GameState::Menu);
-  AudioManager::Instance().PlaySound("snd_background");
+  AudioManager::Instance().PlaySound("snd_background", true);
 }
 
 void BubbleGame::HandleInput(SDL_Event *event) {
   GameScene::HandleInput(event);
+
+  // Toggle collision debug view globally
   if (event->type == SDL_EVENT_KEY_DOWN) {
     if (event->key.scancode == SDL_SCANCODE_D) { Debug::DRAW_COLLISIONS = !Debug::DRAW_COLLISIONS; }
   }
 }
 
+// --- State Management ---
+
 void BubbleGame::OnStateChangedCallback(std::any data) {
   auto payload = std::any_cast<GameStatePayload>(data);
   GameState state = payload.Get<GameState>("currentState");
 
-  SDL_FRect screenSize = GameScene::GetRect();
-  const float screenWidth = screenSize.w;
-  const float screenHeight = screenSize.h;
-
-  SDL_FRect muteButtonRect = {screenWidth - 64.0f, screenHeight - 42, 32, 32};
+  // All states start by clearing previous UI/Nodes
+  ClearNodes();
 
   switch (state) {
-  case GameState::Menu: {
-    ClearNodes();
-    GameStateManager::Instance().GetPayload()->Clear();
-
-    SDL_FRect boardRect = {0, 0, screenWidth, screenHeight};
-    auto board = std::make_shared<Board>(boardRect);
-    AddNode(board);
-
-    auto ballContainer = std::make_shared<BallContainer>(SDL_FRect{52, 0.0f, 536, screenHeight}, true);
-    AddNode(ballContainer);
-
-    auto colorRect = std::make_shared<ColorRect>(SDL_FRect{0, 0, screenWidth, screenHeight}, SDL_Color{0, 0, 0, 128});
-    AddNode(colorRect);
-
-    auto logo = std::make_shared<TextureRect>(SDL_FRect{(screenWidth - 256.0f) / 2.0f, 60.0f, 256, 256}, "img_logo");
-    AddNode(logo);
-
-    auto button = std::make_shared<Button>(SDL_FRect{(screenWidth - 100.0f) / 2.0f, 300.0f, 100, 30}, [](bool pressed) {
-      GameStateManager::Instance().ChangeState(GameState::Game);
-    });
-    button->SetTextures("img_button_up", "img_button_down");
-    button->SetText("Play", "resources/OpenSans-Regular.ttf", 18);
-    AddNode(button);
-
-    auto muteButton = std::make_shared<ToggleButton>(muteButtonRect,
-                                                     [](bool pressed) { AudioManager::Instance().SetMuted(pressed); });
-    muteButton->SetTextures("img_unmuted", "img_muted");
-    AddNode(muteButton);
-
-  } break;
-
-  case GameState::Game: {
-    ClearNodes();
-
-    SDL_FRect boardRect = {0, 0, 640, 480};
-    auto board = std::make_shared<Board>(boardRect);
-    AddNode(board);
-
-    auto ballContainer = std::make_shared<BallContainer>(SDL_FRect{50, 0.0f, 536, 480.0f}, false);
-    ballContainer->SetDifficultyController(new DifficultyController());
-    AddNode(ballContainer);
-
-    auto inventory = std::make_shared<Inventory>(SDL_FRect{32, 418, 224, 64});
-    AddNode(inventory);
-
-    auto cannon = std::make_shared<Cannon>(SDL_FRect{288, 420, 64, 64});
-    AddNode(cannon);
-
-    auto muteButton = std::make_shared<ToggleButton>(muteButtonRect,
-                                                     [](bool pressed) { AudioManager::Instance().SetMuted(pressed); });
-    muteButton->SetTextures("img_unmuted", "img_muted");
-    AddNode(muteButton);
-
-    auto combo = std::make_shared<ComboContainer>();
-    AddNode(combo);
-
-  } break;
-
-  case GameState::EndGame: {
-    ClearNodes();
-
-    SDL_FRect boardRect = {0, 0, screenWidth, screenHeight};
-    auto board = std::make_shared<Board>(boardRect);
-    AddNode(board);
-
-    auto ballContainer = std::make_shared<BallContainer>(SDL_FRect{50, 0.0f, 536, screenHeight}, true);
-    AddNode(ballContainer);
-
-    auto colorRect = std::make_shared<ColorRect>(SDL_FRect{0, 0, screenWidth, screenHeight}, SDL_Color{0, 0, 0, 128});
-    AddNode(colorRect);
-
-    auto textLabel = std::make_shared<Label>(SDL_FRect{0, 0, 0, 0});
-    textLabel->SetFont("resources/OpenSans-Regular.ttf", 24);
-    textLabel->SetText("Game Over!");
-    textLabel->SetPosition({(screenWidth - textLabel->rect.w) / 2.0f, 150.0f});
-    AddNode(textLabel);
-
-    auto payload = GameStateManager::Instance().GetPayload();
-    int totalWon = payload->Get<int>("totalPoints", 0);
-    int bestWon = payload->Get<int>("bestPoints", 0);
-    if (totalWon > bestWon) { payload->Set<int>("bestPoints", totalWon); }
-    auto totalWonLabel = std::make_shared<Label>(SDL_FRect{0, 0, 0, 0});
-    totalWonLabel->SetFont("resources/OpenSans-Regular.ttf", 24);
-    totalWonLabel->SetText("Total Won: " + std::to_string(totalWon));
-    totalWonLabel->SetPosition({(screenWidth - totalWonLabel->rect.w) / 2.0f, 200.0f});
-    AddNode(totalWonLabel);
-
-    auto button = std::make_shared<Button>(SDL_FRect{(screenWidth - 100.0f) / 2.0f, 240.0f, 100, 30}, [](bool pressed) {
-      GameStateManager::Instance().ChangeState(GameState::Game);
-    });
-    button->SetTextures("img_button_up", "img_button_down");
-    button->SetText("Restart", "resources/OpenSans-Regular.ttf", 18);
-    AddNode(button);
-
-    auto muteButton = std::make_shared<ToggleButton>(muteButtonRect,
-                                                     [](bool pressed) { AudioManager::Instance().SetMuted(pressed); });
-    muteButton->SetTextures("img_unmuted", "img_muted");
-    muteButton->SetLayer(100);
-    AddNode(muteButton);
-  } break;
+  case GameState::Menu:
+    SetupMenuState();
+    break;
+  case GameState::Game:
+    SetupGameState();
+    break;
+  case GameState::EndGame:
+    SetupEndGameState();
+    break;
   default:
-    Console::Error("Unknown state");
+    Console::Error("Unknown state encountered in OnStateChangedCallback");
     break;
   }
+}
+
+// --- State Setup Helpers ---
+
+void BubbleGame::SetupMenuState() {
+  SDL_FRect screen = GameScene::GetRect();
+
+  // Background: Board + Animated Ball Container (Showcase mode)
+  AddNode(std::make_shared<Board>(screen));
+  AddNode(std::make_shared<BallController>(SDL_FRect{52, 0.0f, 536, screen.h}, true));
+
+  // Dim the background for UI clarity
+  AddNode(std::make_shared<ColorRect>(screen, SDL_Color{0, 0, 0, 128}));
+
+  // Logo
+  AddNode(std::make_shared<TextureRect>(SDL_FRect{(screen.w - 256.0f) / 2.0f, 60.0f, 256, 256}, "img_logo"));
+
+  // Play Button
+  auto playBtn = std::make_shared<Button>(SDL_FRect{(screen.w - 100.0f) / 2.0f, 300.0f, 100, 30}, [](bool) {
+    GameStateManager::Instance().ChangeState(GameState::Game);
+    AudioManager::Instance().PlaySound("snd_click");
+  });
+  playBtn->SetTextures("img_button_up", "img_button_down");
+  playBtn->SetText("Play", "resources/OpenSans-Regular.ttf", 18);
+  AddNode(playBtn);
+
+  AddMuteButton();
+}
+
+void BubbleGame::SetupGameState() {
+  // Gameplay Board and Ball Logic
+  AddNode(std::make_shared<Board>(SDL_FRect{0, 0, 640, 480}));
+
+  DifficultyController *difficultyController = new DifficultyController();
+  auto ballController = std::make_shared<BallController>(SDL_FRect{50, 0.0f, 536, 480.0f}, false);
+  ballController->SetDifficultyController(difficultyController);
+  AddNode(ballController);
+
+  // Player Elements
+  AddNode(std::make_shared<Inventory>(SDL_FRect{32, 418, 224, 64}));
+  AddNode(std::make_shared<Cannon>(SDL_FRect{288, 420, 64, 64}));
+  AddNode(std::make_shared<ComboContainer>());
+
+  AddMuteButton();
+}
+
+void BubbleGame::SetupEndGameState() {
+  SDL_FRect screen = GameScene::GetRect();
+
+  // Static background elements
+  AddNode(std::make_shared<Board>(screen));
+  AddNode(std::make_shared<BallController>(SDL_FRect{50, 0.0f, 536, screen.h}, true));
+  AddNode(std::make_shared<ColorRect>(screen, SDL_Color{0, 0, 0, 128}));
+
+  // Game Over Header
+  auto title = std::make_shared<Label>(SDL_FRect{0, 0, 0, 0});
+  title->SetFont("resources/OpenSans-Regular.ttf", 24);
+  title->SetText("Game Over!");
+  title->SetPosition({(screen.w - title->rect.w) / 2.0f, 150.0f});
+  AddNode(title);
+
+  // Score Tracking
+  auto payload = GameStateManager::Instance().GetPayload();
+  int currentScore = payload->Get<int>("totalPoints", 0);
+  int bestScore = payload->Get<int>("bestPoints", 0);
+
+  if (currentScore > bestScore) { payload->Set<int>("bestPoints", currentScore); }
+
+  auto scoreLabel = std::make_shared<Label>(SDL_FRect{0, 0, 0, 0});
+  scoreLabel->SetFont("resources/OpenSans-Regular.ttf", 24);
+  scoreLabel->SetText("Total Won: " + std::to_string(currentScore));
+  scoreLabel->SetPosition({(screen.w - scoreLabel->rect.w) / 2.0f, 200.0f});
+  AddNode(scoreLabel);
+
+  // Restart Button
+  auto restartBtn = std::make_shared<Button>(SDL_FRect{(screen.w - 100.0f) / 2.0f, 240.0f, 100, 30}, [](bool) {
+    GameStateManager::Instance().ChangeState(GameState::Game);
+    AudioManager::Instance().PlaySound("snd_click");
+  });
+  restartBtn->SetTextures("img_button_up", "img_button_down");
+  restartBtn->SetText("Restart", "resources/OpenSans-Regular.ttf", 18);
+  AddNode(restartBtn);
+
+  AddMuteButton();
+}
+
+void BubbleGame::AddMuteButton() {
+  SDL_FRect screen = GameScene::GetRect();
+  SDL_FRect rect = {screen.w - 64.0f, screen.h - 42.0f, 32, 32};
+
+  auto muteBtn = std::make_shared<ToggleButton>(rect, [](bool pressed) {
+    AudioManager::Instance().SetMuted(pressed);
+    AudioManager::Instance().PlaySound("snd_click");
+  });
+  muteBtn->SetTextures("img_unmuted", "img_muted");
+  muteBtn->SetLayer(100); // Ensure it's on top of other UI elements
+  AddNode(muteBtn);
 }

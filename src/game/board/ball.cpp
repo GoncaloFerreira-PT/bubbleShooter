@@ -1,4 +1,4 @@
-#include "ball.h"
+#include "game/board/ball.h"
 #include "core/managers/textureManager.h"
 #include "game/bubbleGameConfig.h"
 
@@ -25,7 +25,6 @@ void Ball::Update(float deltaTime) {
   int alpha = GetAlpha();
   vec2 scale = GetScale();
   if (animation == Animation::Pop) {
-
     SetAlpha(alpha - deltaTime);
     SetScale(scale - deltaTime);
     if (GetAlpha() == 0) {

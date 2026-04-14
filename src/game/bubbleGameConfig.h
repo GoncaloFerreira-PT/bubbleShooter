@@ -20,6 +20,7 @@ namespace Game {
     namespace Rules {
       inline constexpr int NECESSARY_BALLS_TO_DESTROY = 3;
       inline constexpr int BASE_POINTS = 5;
+      inline constexpr float ISLAND_MULTIPLIER = 2.0f;
       inline constexpr float COLLIDER_SCALE = 0.7f;
       inline constexpr float BULLET_SPEED = 450.0f;
       inline constexpr float BALL_FALL_SPEED = 150.0f;

@@ -57,26 +57,23 @@ void AudioManager::PlaySound(const std::string &soundID, bool loop) {
     return;
   }
 
-  MIX_Track *track = trackMap.find(soundID) != trackMap.end() ? trackMap[soundID].get() : nullptr;
-
-  if (track) {
-    MIX_PlayTrack(track, 0);
-    return;
+  if (trackMap.find(soundID) == trackMap.end()) {
+    MIX_Track *track = MIX_CreateTrack(mixer);
+    if (!track) {
+      Console::Warn("Couldn't create a mixer track: " + std::string(SDL_GetError()));
+      return;
+    }
+    trackMap[soundID] = std::shared_ptr<MIX_Track>(track, MIX_DestroyTrack);
+    MIX_SetTrackAudio(track, audioMap[soundID].get());
   }
 
-  track = MIX_CreateTrack(mixer);
-  if (!track) { Console::Warn("Couldn't create a mixer track: " + std::string(SDL_GetError())); }
+  MIX_Track *track = trackMap[soundID].get();
 
-  trackMap[soundID] = std::shared_ptr<MIX_Track>(track, MIX_DestroyTrack);
+  SDL_PropertiesID props = SDL_CreateProperties();
 
-  MIX_Audio *audio = audioMap[soundID].get();
-  MIX_SetTrackAudio(track, audio);
-  if (loop) {
-    SDL_PropertiesID props = SDL_CreateProperties();
-    SDL_SetNumberProperty(props, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
-    MIX_PlayTrack(track, props);
-    SDL_DestroyProperties(props);
-  } else {
-    MIX_PlayTrack(track, 0);
-  }
+  SDL_SetNumberProperty(props, MIX_PROP_PLAY_LOOPS_NUMBER, loop ? -1 : 0);
+  MIX_SetTrackLoops(track, loop ? -1 : 0);
+
+  MIX_PlayTrack(track, props);
+  SDL_DestroyProperties(props);
 }

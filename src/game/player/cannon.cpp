@@ -1,19 +1,20 @@
 #include "cannon.h"
-#include "ball.h"
+#include "core/managers/audioManager.h"
 #include "core/managers/eventManager.h"
 #include "core/managers/textureManager.h"
 #include "core/modifiers/collisionBox.h"
 #include "core/node/node.h"
+#include "game/board/ball.h"
 #include "game/bubbleGameConfig.h"
 
 Cannon::Cannon(SDL_FRect rect) : Node(rect) {
   rc = std::make_unique<RayCast>();
   rc->SetCheckCondition([this](const vec2 &pos) {
-    if (!ballContainer) return false;
+    if (!ballController) return false;
 
     vec2 ballSize = Game::Config::Grid::BALL_SIZE;
-    vec2i gridPos = ballContainer->WorldToGrid(pos - vec2(ballSize.x / 2, ballSize.y / 2));
-    auto ball = ballContainer->GetBallAt(gridPos);
+    vec2i gridPos = ballController->WorldToGrid(pos - vec2(ballSize.x / 2, ballSize.y / 2));
+    auto ball = ballController->GetBallAt(gridPos);
     return (ball && !ball->IsPendingDestruction());
   });
 
@@ -30,13 +31,14 @@ void Cannon::OnBallCreatedCallback(std::any data) {
 }
 
 void Cannon::OnAddedToScene() {
-  ballContainer = GameScene::Instance().GetFirstNodeOfType<BallContainer>();
+  ballController = GameScene::Instance().GetFirstNodeOfType<BallController>();
   LoadBullet(GetRandomColor());
 }
 
 void Cannon::Shoot() {
   blocked = true;
   if (currentBullet && !currentBullet->active) {
+    AudioManager::Instance().PlaySound("snd_shoot");
     currentBullet->active = true;
     currentBullet->direction = direction;
     currentBullet = nullptr;

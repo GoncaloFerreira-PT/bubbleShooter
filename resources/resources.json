@@ -31,5 +31,18 @@
   {
     "name": "snd_background",
     "path": "resources/snd_background.wav"
-  }]
+  },
+  {
+    "name": "snd_click",
+    "path": "resources/snd_click.wav"
+  },
+  {
+    "name": "snd_shoot",
+    "path": "resources/snd_shoot.wav"
+  },
+  {
+    "name": "snd_points",
+    "path": "resources/snd_points.wav"
+  }
+]
 }

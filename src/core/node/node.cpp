@@ -39,7 +39,7 @@ void Node::SetScale(vec2 newScale) {
   this->scale = newScale;
 }
 
-SDL_FRect Node::GetScaledRect() const {
+SDL_FRect Node::GetScaledRect() {
   SDL_FRect scaledRect = rect;
   scaledRect.w *= scale.x;
   scaledRect.h *= scale.y;
@@ -83,5 +83,3 @@ void MovableNode::Move(float deltaTime) {
     }
   }
 }
-
-void MovableNode::SetDestroyOnExitScreen(bool value) { destroyOnExitScreen = value; }

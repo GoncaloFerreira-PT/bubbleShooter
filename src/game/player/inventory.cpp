@@ -1,4 +1,4 @@
-#include "game/inventory.h"
+#include "game/player/inventory.h"
 #include "core/managers/eventManager.h"
 #include "core/managers/textureManager.h"
 #include "core/utils/console.h"

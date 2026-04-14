@@ -1,16 +1,16 @@
 #pragma once
 #include "core/node/node.h"
 #include "core/utils/math.h"
-#include "game/ball.h"
-#include "game/ballContainer.h"
-#include "game/bullet.h"
+#include "game/board/ball.h"
+#include "game/controllers/ballController.h"
+#include "game/player/bullet.h"
 #include <any>
 #include <core/utils/raycast.h>
 #include <memory>
 
 class Cannon : public Node {
 private:
-  std::shared_ptr<BallContainer> ballContainer;
+  std::shared_ptr<BallController> ballController;
 
 public:
   vec2 direction = {0.0f, -1.0f};

@@ -1,29 +1,26 @@
+// node.h
 #pragma once
 #include "core/gameScene.h"
 #include "core/managers/eventManager.h"
 #include "core/modifiers/collisionBox.h"
-#include "core/utils/console.h"
 #include "core/utils/math.h"
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_pixels.h>
 #include <memory>
 
 using namespace Math;
 
 class Node : public std::enable_shared_from_this<Node> {
-
-private:
-  bool pendingDestruction = false;
+protected:
   int layer = 0;
-  vec2 scale = {1, 1};
+  vec2 scale = {1.0f, 1.0f};
   SDL_Color modulate = {255, 255, 255, 255};
+  bool pendingDestruction = false;
 
 public:
-  SDL_FRect rect;
-
+  SDL_FRect rect{};
   std::shared_ptr<CollisionBox> collisionBox = nullptr;
 
-  Node() { Node(SDL_FRect{0, 0, 0, 0}); }
+  Node() = default;
 
   Node(SDL_FRect rect) : rect(rect) {}
 
@@ -32,27 +29,39 @@ public:
     EventManager::Instance().UnsubscribeAll(this);
   }
 
-  virtual void Update(float deltaTime) {};
-  virtual void Draw(SDL_Renderer *renderer) {};
+  virtual void Update(float deltaTime) {}
 
-  virtual bool HandleInput(SDL_Event *event) { return false; };
+  virtual void Draw(SDL_Renderer *renderer) {}
 
-  virtual void OnAddedToScene() {};
+  virtual bool HandleInput(SDL_Event *event) { return false; }
+
+  virtual void OnAddedToScene() {}
+
+  virtual void OnDestroy() {}
 
   void Destroy() {
     pendingDestruction = true;
     OnDestroy();
   }
 
-  virtual void OnDestroy() {};
+  bool IsPendingDestruction() { return pendingDestruction; }
 
-  bool IsPendingDestruction() const { return pendingDestruction; }
+  // Transform logic
+  void SetPosition(vec2 pos);
+  vec2 GetPosition();
 
-  void SetLayer(int newLayer) {
-    if (layer != newLayer) { layer = newLayer; }
-  }
+  vec2 GetCenter();
 
-  int GetLayer() const { return layer; }
+  void SetScale(vec2 newScale);
+
+  vec2 GetScale() { return scale; }
+
+  SDL_FRect GetScaledRect();
+
+  // Appearance
+  void SetLayer(int newLayer) { layer = newLayer; }
+
+  int GetLayer() { return layer; }
 
   void SetModulate(SDL_Color color);
 
@@ -62,32 +71,24 @@ public:
 
   int GetAlpha() { return modulate.a; }
 
-  void SetPosition(vec2 position);
-  vec2 GetPosition();
-
-  vec2 GetCenter();
-  void SetScale(vec2 scale);
-
-  vec2 GetScale() { return scale; }
-
-  SDL_FRect GetScaledRect() const;
-
+  // Physics
   void AddCollisionBox(CollisionLayer category, CollisionLayer mask, SDL_FRect customRect = {0, 0, 0, 0});
   void RemoveCollisionBox();
 };
 
 class MovableNode : public Node {
-
-private:
+protected:
   bool destroyOnExitScreen = true;
 
 public:
-  vec2 direction;
+  vec2 direction{0, 0};
   float speed = 0.0f;
 
   MovableNode(SDL_FRect rect) : Node(rect) {}
 
   void Move(float deltaTime);
-  void SetDestroyOnExitScreen(bool value);
-  virtual void OnExitScreen() {};
+
+  void SetDestroyOnExitScreen(bool value) { destroyOnExitScreen = value; }
+
+  virtual void OnExitScreen() {}
 };

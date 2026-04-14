@@ -1,5 +1,12 @@
 #include "resourceManager.h"
+#include "core/managers/audioManager.h"
+#include "core/managers/fontManager.h"
+#include "core/managers/textureManager.h"
+#include "core/utils/console.h"
+#include <fstream>
+#include <json.hpp>
 
+// Load Resources based on (resourcesPath)'s resources.json mapping
 bool ResourceManager::Load() {
   std::string jsonPath = SDL_GetBasePath() + resourcesPath;
   std::ifstream file(jsonPath);
