@@ -27,7 +27,7 @@ jobs:
     # ==========================================
     # Upload to Windows
     # ==========================================
-    - name: 📦 (Windows)
+    - name: 📤 Upload for Windows
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
@@ -38,9 +38,14 @@ jobs:
           build/Release/resources/
 
     # ==========================================
-    # Upload to Mak
+    # Upload to Mac
     # ==========================================
-    - name: 📦 (Mac)
+    - name: 📦 Move Dylibs (Mac)
+      if: matrix.os == 'macos-latest'
+      run: |
+        find build -name "*.dylib" -exec cp {} build/ \;
+        
+    - name: 📤 Upload for Mac
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v4
       with:
@@ -48,4 +53,4 @@ jobs:
         path: |
           build/bubbleShooter
           build/resources/
-          build/**/*.dylib
+          build/*.dylib
