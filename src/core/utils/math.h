@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include <array>
+#include <cmath>
+#include <cstddef>
 #include <functional>
 
 namespace Math {

@@ -2,8 +2,14 @@
 #include "bubbleGameConfig.h"
 #include "core/managers/gameStateManager.h"
 #include "core/node/node.h"
+#include "core/utils/math.h"
 #include "game/bubbleGameConfig.h"
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3/SDL_stdinc.h>
+#include <array>
+#include <cstddef>
 #include <string>
 
 enum Color : int { Red, Green, Blue, Yellow, Orange, Purple, Cyan, COUNT };
