@@ -1,26 +1,26 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include <vector>
-#include "core/node/node.h"
+#include <memory>
 
 class Node;
+using CollisionLayer = uint32_t;
 
-struct CollisionData
-{
-    Node* first;
-    Node* second;
-};  
+namespace CollisionLayers {
+  static const uint32_t NONE = 0;
+  static const uint32_t LAYER_1 = 1 << 0;
+  static const uint32_t LAYER_2 = 1 << 1;
+  static const uint32_t LAYER_3 = 1 << 2;
+} // namespace CollisionLayers
 
-class CollisionBox
-{
-private:
-    const SDL_Color DEBUG_COLOR = {0, 191, 255, 120};
+class CollisionBox {
 
 public:
-    SDL_FRect rect;
+  SDL_FRect rect;
+  std::weak_ptr<Node> owner;
+  CollisionLayer category = CollisionLayers::NONE;
+  CollisionLayer mask = CollisionLayers::NONE;
+  bool pending_destruction = false;
+  CollisionBox(std::weak_ptr<Node> owner, CollisionLayer category, CollisionLayer mask);
 
-    CollisionBox(SDL_FRect rect) : rect(rect) {}
-    bool CheckCollision(const CollisionBox &other) const;
-    void Draw(SDL_Renderer *renderer);
-    void UpdateCollision(SDL_FRect parentRect);
+  void UpdateRect(SDL_FRect parentRect);
 };

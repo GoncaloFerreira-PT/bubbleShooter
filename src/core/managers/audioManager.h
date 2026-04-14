@@ -1,37 +1,36 @@
 #pragma once
-#include <string>
 #include <SDL3/SDL.h>
 #include <SDL3_mixer/SDL_mixer.h>
-#include <map>
-#include <unordered_map>
 #include <memory>
-#include "core/utils/console.h"
+#include <string>
+#include <unordered_map>
 
-class AudioManager
-{
+class AudioManager {
 private:
-    bool initialized = false;
-    std::unordered_map<std::string, std::shared_ptr<MIX_Audio>> audioMap{};
-    MIX_Mixer *sfxMixer{nullptr};
+  bool initialized = false;
+  bool muted = false;
+  std::unordered_map<std::string, std::shared_ptr<MIX_Audio>> audioMap{};
+  std::unordered_map<std::string, std::shared_ptr<MIX_Track>> trackMap{};
+  MIX_Mixer *mixer{nullptr};
 
 public:
-    ~AudioManager()
-    {
-        Destroy();
-    }
+  ~AudioManager() { Destroy(); }
 
-    static AudioManager &Instance()
-    {
-        static AudioManager instance;
-        return instance;
-    }
+  static AudioManager &Instance() {
+    static AudioManager instance;
+    return instance;
+  }
 
-    AudioManager(){Init();}
+  AudioManager() { Init(); }
 
-    void Init();
-    bool Load(const std::string &filePath, const std::string &soundID);
-    void PlaySound(const std::string &soundID);
-    void StopSound(const std::string &soundID);
-    void Destroy(){};
-    bool IsAudioLoaded(const std::string &soundID);
+  void Init();
+  bool Load(const std::string &filePath, const std::string &soundID);
+  void PlaySound(const std::string &soundID, bool loop = false);
+  void StopSound(const std::string &soundID);
+  void Destroy() {};
+  bool IsAudioLoaded(const std::string &soundID);
+
+  void SetMuted(bool muted);
+
+  bool IsMuted() const { return muted; }
 };

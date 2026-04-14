@@ -1,0 +1,11 @@
+BasedOnStyle: LLVM
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: All
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: WithoutElse
+MaxEmptyLinesToKeep: 2
+KeepEmptyLinesAtTheStartOfBlocks: true
+SeparateDefinitionBlocks: Always
+FixNamespaceComments: true
+ShortNamespaceLines: 6
+NamespaceIndentation: All

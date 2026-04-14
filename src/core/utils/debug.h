@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
 #include <memory>
+#include <string>
 
-class Debug
-{
+
+class Debug {
 public:
-    inline static bool DRAW_COLLISIONS = false;
+  inline static bool DRAW_COLLISIONS = false;
 };

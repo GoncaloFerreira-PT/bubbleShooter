@@ -1,33 +1,30 @@
 #pragma once
-#include <deque>
 #include "core/node/node.h"
-#include <SDL3/SDL.h>
 #include "game/ball.h"
+#include "game/bubbleGameConfig.h"
+#include <SDL3/SDL.h>
 #include <any>
-#include "core/managers/textureManager.h"
+#include <deque>
 
+class Inventory : public MovableNode {
+private:
+  struct AnimationData {
+    bool animating = false;
+    float offset = Game::Config::Grid::BALL_SIZE.x;
+    float speed = 200.0f;
+  };
 
-class Inventory: public MovableNode
-{
-    private:
+  AnimationData animationData;
 
-        struct AnimationData{
-            bool animating = false;
-            float offset = 32.0f;
-        };
+  int size = 5;
+  std::deque<std::shared_ptr<Ball>> deque;
 
-        AnimationData animationData;
-
-        int size = 5;
-        std::deque<Ball*> deque;
-
-    public:
-        Inventory(SDL_FRect rect);
-        void Update(float deltaTime) override;
-        void Draw(SDL_Renderer *renderer) override;
-        void Animate();
-        Ball* CreateBall();
-        void Push(Ball* ball);
-        Ball* Pop();
-        void OnBallShotCallback(std::any data);
+public:
+  Inventory(SDL_FRect rect);
+  void Update(float deltaTime) override;
+  void Draw(SDL_Renderer *renderer) override;
+  void CreateBall();
+  void Push(std::shared_ptr<Ball> ball);
+  std::shared_ptr<Ball> Pop();
+  void OnBallShotCallback(std::any data);
 };
